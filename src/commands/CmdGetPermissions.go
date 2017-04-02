@@ -4,6 +4,7 @@ package commands
 import (
 "fmt"
 "msg"
+	"bufio"
 )
 
 // CmdGetPermission defined arguments and related methods
@@ -29,8 +30,8 @@ func (cp *CmdGetPermission) Help() {
 }
 
 // Parse to parse arguments
-func (cp *CmdGetPermission) Parse(argString string) error {
-	cp.Command.Parse(argString)
+func (cp *CmdGetPermission) Parse(argString string, reader *bufio.Scanner) error {
+	cp.Command.Parse(argString, reader)
 	return nil
 }
 

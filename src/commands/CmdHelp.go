@@ -6,6 +6,7 @@ import (
 )
 import (
 	"fmt"
+	"bufio"
 )
 
 // Help defined arguments and related methods
@@ -28,8 +29,8 @@ func (cp *CmdHelp) Help() {
 }
 
 // Parse to parse arguments
-func (cp *CmdHelp) Parse(argString string) error {
-	cp.Command.Parse(argString)
+func (cp *CmdHelp) Parse(argString string, reader *bufio.Scanner) error {
+	cp.Command.Parse(argString, reader)
 	return nil
 }
 

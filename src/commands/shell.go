@@ -1,4 +1,4 @@
-// Package commands with shell implementations
+// Package commands base shell command features.
 package commands
 
 import (
@@ -26,17 +26,16 @@ func NewShell() *Shell {
 
 // Process method to handle commands
 func (sh *Shell) Process() error {
-	reader := bufio.NewReader(os.Stdin)
+	reader := bufio.NewScanner(os.Stdin)
 	cmdMgr := NewManager()
 	sh.prompt()
-	for {
-		cmdInput, _ := reader.ReadString('\n')
-		cmdInput = strings.TrimRight(cmdInput, msg.NewLine)
-		if msg.Empty != cmdInput {
-		} else {
+	for reader.Scan() {
+		cmdInput := reader.Text()
+		cmdInput = strings.Trim(cmdInput, msg.CutSet)
+		if msg.Empty == cmdInput {
 			cmdInput = "help"
 		}
-		out, err := cmdMgr.Run(cmdInput)
+		out, err := cmdMgr.Run(cmdInput, reader)
 		processOutput(out, err)
 		sh.prompt()
 	}

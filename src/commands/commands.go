@@ -5,12 +5,13 @@ package commands
 import (
 	"msg"
 	"strings"
+	"bufio"
 )
 
 // IManager should have behaviour run and a base parse
 type IManager interface {
 	Parse() error
-	Run() (string, error)
+	Run(string, *bufio.Scanner) (string, error)
 }
 
 // Manager handles requested command and available command's list
@@ -58,7 +59,7 @@ func (cm *Manager) Parse(cmdString string) error {
 }
 
 // Run the requested command and provide output
-func (cm *Manager) Run(cmdString string) (string, error) {
+func (cm *Manager) Run(cmdString string, reader *bufio.Scanner) (string, error) {
 	err := cm.Parse(cmdString)
 	if nil != err {
 		return msg.Empty, err
@@ -66,7 +67,7 @@ func (cm *Manager) Run(cmdString string) (string, error) {
 	cmd, ok := cm.Commands[cm.cmd]
 	if ok {
 		cmd.Clear()
-		err := cmd.Parse(cm.argString)
+		err := cmd.Parse(cm.argString, reader)
 		if nil != err {
 			return msg.Empty, msg.ErrInvalidParams
 		}

@@ -5,13 +5,14 @@ package commands
 import (
 	"msg"
 	"strings"
+	"bufio"
 )
 
 // ICommand for base command's required behaviour
 type ICommand interface {
 	Help()
 	GetName() string
-	Parse(string) error
+	Parse(string, *bufio.Scanner) error
 	Verify() error
 	Run() (string, error)
 	Clear()
@@ -49,7 +50,7 @@ func (c *Command) Clear() {
 }
 
 // Parse to help command to parse arguments from input string
-func (c *Command) Parse(argString string) error {
+func (c *Command) Parse(argString string, reader *bufio.Scanner) error {
 	c.InputArgs = argString
 	c.Args = strings.Split(argString, msg.Seperator)
 	for index, arg := range c.Args {

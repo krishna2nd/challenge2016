@@ -23,6 +23,8 @@ func (p Permissions) String() string {
 }
 */
 
+var distributers = make(map[string]*Distributer, 0)
+
 type Distributer struct {
 	name string
 	permissions Permissions
@@ -45,11 +47,12 @@ func (d *Distributer) exclude(region *regions.Node)  {
 	}
 }
 
-func (d *Distributer) permission(permissions []string) *Distributer {
+func (d *Distributer) permission(permissions []string) (*Distributer, error) {
 	var (
 		parts []string
 		region *regions.Node
 	)
+
 	for _, permission := range permissions {
 		parts = strings.SplitN(permission, ":", 2)
 		if (len(parts) == 2) {
@@ -64,19 +67,42 @@ func (d *Distributer) permission(permissions []string) *Distributer {
 		}
 	}
 
-	return d;
+	return d, nil;
+}
+
+func (d *Distributer) UpdatePermissions(permissions []string) (*Distributer, error) {
+	d.permissions = Permissions {
+		include:[]*regions.Node {},
+		exclude:[]*regions.Node {},
+	}
+	return d.permission(permissions)
 }
 
 func (d *Distributer) GetPermissions() Permissions {
 	return d.permissions;
 }
 
-func New(name string, permission []string) *Distributer {
+func New(name string, permission []string, parent *Distributer) (*Distributer, error) {
 	var d = &Distributer{
 		name:name,
 	}
-	d.permission(permission)
-	return d;
+	_, err := d.permission(permission)
+	if (nil != err) {
+		return nil, err
+	}
+	d.parent = parent
+	add(d);
+	return d, nil;
 }
 
+func add(newDistributer *Distributer) {
+	distributers[newDistributer.name] = newDistributer
+}
 
+func GetAll() map[string]*Distributer {
+	return distributers
+}
+
+func Get(name string) *Distributer {
+	return distributers[name]
+}
