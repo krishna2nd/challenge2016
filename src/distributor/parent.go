@@ -16,4 +16,3 @@ func SetIndividualPermission(disName string, subCmds []string) (string, error) {
 	}
 	return msg.Success, nil
 }
-

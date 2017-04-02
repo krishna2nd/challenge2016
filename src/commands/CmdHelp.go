@@ -1,12 +1,10 @@
 // Package commands with 'get permission' command implementation
 package commands
 
+import ()
 import (
-
-)
-import (
-	"fmt"
 	"bufio"
+	"fmt"
 )
 
 // Help defined arguments and related methods
@@ -36,7 +34,7 @@ func (cp *CmdHelp) Parse(argString string, reader *bufio.Scanner) error {
 
 // Verify to check the provided parameters are valid or not
 func (cp *CmdHelp) Verify() error {
-	return nil;
+	return nil
 }
 
 // Run to execute the command and provide result

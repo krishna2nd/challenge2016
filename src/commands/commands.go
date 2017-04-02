@@ -3,9 +3,9 @@
 package commands
 
 import (
+	"bufio"
 	"msg"
 	"strings"
-	"bufio"
 )
 
 // IManager should have behaviour run and a base parse
@@ -20,9 +20,10 @@ type Manager struct {
 	Commands       map[string]ICommand
 }
 
-var mgrCmd = &Manager {
+var mgrCmd = &Manager{
 	Commands: make(map[string]ICommand),
 }
+
 // NewManager return command manager
 func NewManager() *Manager {
 	mgrCmd.Register(NewCmdGetPermission())

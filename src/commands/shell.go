@@ -4,8 +4,8 @@ package commands
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"msg"
+	"os"
 	"strings"
 )
 

@@ -14,7 +14,7 @@ func main() {
 		"EXCLUDE: KARNATAKA-INDIA",
 		"EXCLUDE: CHENNAI-TAMILNADU-INDIA",
 	})
-	
+
 	fmt.Print(distributor, distributor.GetPermissions())
 	*/
 	// Interactive shell will provide to user to operate

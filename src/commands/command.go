@@ -3,9 +3,9 @@
 package commands
 
 import (
+	"bufio"
 	"msg"
 	"strings"
-	"bufio"
 )
 
 // ICommand for base command's required behaviour
@@ -71,9 +71,9 @@ func (c *Command) Run() (string, error) {
 
 // check and show command help
 func (c *Command) isHelp() bool {
-	if (strings.ToLower(c.Args[0]) == "help") {
+	if strings.ToLower(c.Args[0]) == "help" {
 		c.Help()
-		return true;
+		return true
 	}
 	return false
 }

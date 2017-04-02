@@ -2,9 +2,9 @@
 package commands
 
 import (
-"fmt"
-"msg"
 	"bufio"
+	"fmt"
+	"msg"
 )
 
 // CmdGetPermission defined arguments and related methods
@@ -45,8 +45,8 @@ func (cp *CmdGetPermission) Verify() error {
 
 // Run to execute the command and provide result
 func (cp *CmdGetPermission) Run() (string, error) {
-	if (cp.isHelp()) {
-		cp.Help();
+	if cp.isHelp() {
+		cp.Help()
 		return "", nil
 	}
 	return "No output", nil

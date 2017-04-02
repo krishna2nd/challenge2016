@@ -2,10 +2,10 @@
 package commands
 
 import (
-	"msg"
-	"fmt"
 	"bufio"
 	"distributor"
+	"fmt"
+	"msg"
 )
 
 // CmdSetPermission defined arguments and related methods
@@ -55,7 +55,7 @@ func (cp *CmdSetPermission) Help() {
 // Parse to parse arguments
 func (cp *CmdSetPermission) Parse(argString string, reader *bufio.Scanner) error {
 	cp.Command.Parse(argString, reader)
-	cp.inputSubCmds =  make([]string, 0)
+	cp.inputSubCmds = make([]string, 0)
 	// Read input  sub commands
 	for reader.Scan() {
 		input := reader.Text()
@@ -72,20 +72,22 @@ func (cp *CmdSetPermission) Verify() error {
 	if 0 == len(cp.Args) {
 		return msg.ErrInvalidParams
 	}
-	return nil;
+	return nil
 }
 
 // Run to execute the command and provide result
 func (cp *CmdSetPermission) Run() (string, error) {
-	if (cp.isHelp()) {
-		cp.Help();
+	if cp.isHelp() {
+		cp.Help()
 		return msg.Empty, nil
 	}
 	switch len(cp.Args) {
-	case 1: return distributor.SetIndividualPermission(cp.Args[0], cp.inputSubCmds);
-	case 2: return distributor.SetLevelPermission(cp.Args[1], cp.Args[0], cp.inputSubCmds);
-	case 3: return distributor.SetLevel2Permission(cp.Args[2], cp.Args[1], cp.Args[0], cp.inputSubCmds);
+	case 1:
+		return distributor.SetIndividualPermission(cp.Args[0], cp.inputSubCmds)
+	case 2:
+		return distributor.SetLevelPermission(cp.Args[1], cp.Args[0], cp.inputSubCmds)
+	case 3:
+		return distributor.SetLevel2Permission(cp.Args[2], cp.Args[1], cp.Args[0], cp.inputSubCmds)
 	}
 	return msg.Empty, msg.ErrInvalidCommandExcec
 }
-
